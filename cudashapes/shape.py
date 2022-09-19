@@ -1,6 +1,5 @@
-from typing import List
 import numpy as np
-import pycuda.gpuarray as cuarr
+import pycuda.gpuarray as gpuarray
 
 class shape:
     def __init__(self, *strRepresentation:str):
@@ -32,11 +31,8 @@ class shape:
             if not self.exists(fy, orientations):
                 orientations.append(fy)
 
-        self.orientations = np.array(orientations)
+        self.orientations = gpuarray.to_gpu(np.array(orientations))
 
-
-        
-                
     def exists(self, orientation, orientations):
         for o in orientations:
             if np.array_equal(o, orientation):

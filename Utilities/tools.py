@@ -76,6 +76,26 @@ def exists(orientation, orientations):
             return True
     return False
 
+def createOrientations(p:shape):
+    orientations = list()
+    # Rotations and flips
+    for i in range(4):
+        r = np.rot90(p, i, (0,1))
+        if not exists(r, orientations):
+            orientations.append(r)
+            yield r
+        
+        fx = np.fliplr(r)
+        if not exists(fx, orientations):
+            orientations.append(fx)
+            yield fx
+
+        fy = np.flipud(r)
+        if not exists(fy, orientations):
+            orientations.append(fy)
+            yield fy
+
+
 def testPatterns():
     patterns = [
         [
